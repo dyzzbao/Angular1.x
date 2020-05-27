@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>模板数据绑定</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-controller="testC">
+    <h1>{{newtitle}}</h1>
+    题目：<input type="text" ng-model="name"><br>
+    分数：<input type="text" ng-model="fraction"><br>
+    <hr>
+    <h1>{{previewtitle}}</h1>
+    <b>{{name}}</b>({{fraction}}分)
+  </div>
+  <script>
+    var app = angular.module('MyApp', {}, function () { console.log('started'); });
+    var testC = function ($scope) {
+      $scope.newtitle = '新建试题';
+      $scope.previewtitle = '预览试题';
+      $scope.name = $scope.fraction = '';
+    }
+  </script>
+</body>
+
+</html>

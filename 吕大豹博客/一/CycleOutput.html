@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-controller="testC">
+    <h1>{{question.newtitle}}</h1>
+    题目:<input type="text" ng-model="question.name" /><br />
+    分数:<input type="text" number ng-model="question.fraction" /><br />
+    选项:<button ng-click="addOption()">增加选项</button><br />
+    <ul>
+      <li ng-repeat="o in question.options">
+        <b>{{$index+1}}.</b>
+        <input type="text" ng-model="o.content" value="o.content" />
+        <a href="javascript:void(0);" ng-click="delOption($index)">删除</a>
+      </li>
+    </ul>
+    <hr>
+    <div>
+      <h1>{{question.previewtitle}}</h1>
+      <b>{{question.name}}</b>({{question.fraction}}分)
+      <ul>
+        <li ng-repeat="o in question.options">
+          <b>{{$index+1}}.</b>
+          <input type="radio" name="optcheck" />
+          {{o.content}}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="js/cycleoutput.js">
+
+  </script>
+</body>
+
+</html>
