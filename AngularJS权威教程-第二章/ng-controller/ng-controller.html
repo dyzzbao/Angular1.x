@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-controller="Mycontroller">
+    <!-- <h1>hello {{person.name}}</h1> -->
+    <h5>{{ clock }}</h5>
+  </div>
+  <script>
+    function Mycontroller($scope, $timeout) {
+      var updateClock = function () {
+        $scope.clock = new Date();
+        $timeout(function () {
+          updateClock();
+        }, 1000);
+      };
+      updateClock();
+    }
+  </script>
+</body>
+
+</html>
+
+<!-- 
+当定时器触发时会调用updateClock()函数，将$scope.clock的值设置为当
+前时间。
+-->
