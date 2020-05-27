@@ -25,11 +25,14 @@
     app.directive('sayHello', function () {
       return {
         restrict: 'E',
-        template: ' <div> hello <b ng-transclude></b> {­{cont}}</div>',
+        template: ' <div> hello <b ng-transclude></b> <span ng-bind="cont"></span></div>',
         replace: true,
         transclude: true,
         scope: {
           cont: '=speak'
+        },
+        link: function ($scope) {
+          debugger
         }
       }
     })
