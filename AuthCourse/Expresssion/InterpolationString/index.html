@@ -11,23 +11,51 @@
 
 <body>
   <div ng-app="myApp">
-    <div ng-controller="MyController">
-      <input type="email" ng-model="to" placeholder="Recipient">
-      <textarea ng-model="emailBody"></textarea>
-      <pre>{{previewText}}</pre>
+    <div ng-app="emailParser">
+      <div ng-controller="MyController">
+        <div id="emailEditor">
+          To：<input type="email" ng-model="to" placeholder="Recipient">
+          <hr>
+          Email body：<textarea ng-model="emailBody" style="width: 100%;" rows="9"></textarea>
+        </div>
+        <hr>
+        <div id="emailPreview">
+          <pre>__previewText__</pre>
+        </div>
+      </div>
     </div>
   </div>
   <script>
-    var app = angular.module('myApp', {}, function () { console.log('started'); });
-    app.controller('MyController', function ($scope, $interpolate) {
-      // 设置监听emailBody
-      $scope.$watch('emailBody', function (body) {
-        var template = $interpolate(body);
-        $scope.previewText = template({
-          to: $scope.to
-        })
-      })
-    })
+    angular.module('emailParser', [])
+      .config(['$interpolateProvider', function ($interpolateProvider) {
+        $interpolateProvider.startSymbol('__');
+        $interpolateProvider.endSymbol('__');
+      }])
+      .factory('EmailParser', ['$interpolate', function ($interpolate) {
+        // 处理解析的服务
+        return {
+          parse: function (text, context) {
+            var template = $interpolate(text);
+            return template(context);
+          }
+        }
+      }])
+    // 现在，我们已经创建了一个模块，可以将它注入到应用中，并在邮件正文的文本中运行这个邮件解析器
+    angular.module('myApp', ['emailParser'])
+      .controller('MyController', ['$scope', 'EmailParser',
+        function ($scope, EmailParser) {
+          $scope.to = "109538893@qq.com"
+          $scope.emailBody = `hello, __to__,
+123456`
+          // 设置监听
+          $scope.$watch('emailBody', function (body) {
+            if (body) {
+              $scope.previewText = EmailParser.parse(body, {
+                to: $scope.to
+              })
+            }
+          })
+        }])
   </script>
 </body>
 
