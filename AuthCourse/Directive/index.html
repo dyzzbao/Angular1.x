@@ -11,14 +11,14 @@
 
 <body>
   <div ng-app="myApp">
-    <my-directive></my-directive>
+    <div my-directive></div>
   </div>
   <script>
     var app = angular.module('myApp', {}, function () { console.log('started'); });
     app.directive('myDirective', function () {
       return {
         // 元素（E）、属性（A）、类（C）或注释（M）
-        restrict: 'E',
+        restrict: 'A',
         // 以将自定义标签从生成的DOM中完全移除掉，并只留下由模版生成的链接
         replace: true,
         template: '<a href="http://google.com">Click me to go to Google</a>'
