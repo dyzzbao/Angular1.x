@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <my-directive></my-directive>
+  </div>
+  <script>
+    var app = angular.module('myApp', {}, function () { console.log('started'); });
+    app.directive('myDirective', function () {
+      return {
+        // 元素（E）、属性（A）、类（C）或注释（M）
+        restrict: 'E',
+        // 以将自定义标签从生成的DOM中完全移除掉，并只留下由模版生成的链接
+        replace: true,
+        template: '<a href="http://google.com">Click me to go to Google</a>'
+      }
+    })
+  </script>
+</body>
+
+</html>
+<!-- 
+  通过AngularJS模块API中的.directive()方法，我们可以通过传入一个字符串和一个函数来
+注册一个新指令。其中字符串是这个指令的名字，指令名应该是驼峰命名风格的，函数应该返回
+一个对象。
+-->
