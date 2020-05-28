@@ -11,7 +11,7 @@
 
 <body>
   <div ng-controller="MyController">
-    <h5>{{clock | date:'yyyy-MM-dd HH:mm:ss'}}</h5>
+    <h5>{{clock.now | date:'yyyy-MM-dd HH:mm:ss'}}</h5>
   </div>
   <script>
     var app = angular.module('MyApp', {}, function () {
