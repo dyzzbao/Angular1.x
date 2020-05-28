@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-init="name='123'">
+    {{name}}
+  </div>
+  <script>
+    var app = angular.module('MyApp', {}, function () { console.log('started'); });
+  </script>
+</body>
+
+</html>
+<!--  
+使用angular.module()方法来声明模块，这个方法能够接受两个参数，第一个是模块的名称，第二个是依赖列表，也就是可以被注入到模块中的对象列表。
+-->
