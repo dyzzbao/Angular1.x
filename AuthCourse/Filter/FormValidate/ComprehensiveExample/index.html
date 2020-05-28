@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <form name="signup_form" novalidate ng-submit="signupForm()" ng-controller="signupController">
+      <fieldset>
+        <legend>Signup form</legend>
+        <!-- name -->
+        <div class="row">
+          <div class="large-12 columns">
+            <label name="name">Your name</label>
+            <input ng-class="{error: signup_form.name.$dirty && signup_form.name.$invalid}" type="text" name="name"
+              placeholder="Name" ng-model="signup.name" ng-minlength="3" ng-maxlength="20" required />
+            <!-- 仅当signup_form.submitted设置为true时，容纳错误信息的div才会展示出来。在signupForm操作中实现这个行为， -->
+            <div class="error" ng-show="signup_form.name.$dirty && signup_form.name.$invalid &&signup_form.submitted">
+              <small class="error" ng-show="signup_form.name.$error.required">
+                Your name is required
+              </small>
+              <small class="error" ng-show="signup_form.name.$error.minlength">
+                Your name is required to be at least 3 characters
+              </small>
+              <small class="error" ng-show="signup_form.name.$error.maxlength">
+                Your name cannot be longer than 20 characters
+              </small>
+            </div>
+          </div>
+        </div>
+        <!-- email -->
+        <div class="row">
+          <div class="large-12 columns">
+            <label name="emial">Your email</label>
+            <input type="text" name="email" placeholder="Email" ng-model="signup.email" ng-minlength="3"
+              ng-maxlength="20" required />
+            <div class="error" ng-show="signup_form.email.$dirty && signup_form.emial.$invalid">
+              <small class="error" ng-show="signup_form.email.$error.required">
+                Your email is required
+              </small>
+              <small class="error" ng-show="signup_form.email.$error.minlength">
+                Your email is required to be at least 3 characters
+              </small>
+              <small class="error" ng-show="signup_form.email.$error.maxlength">
+                Your email cannot be longer than 20 characters
+              </small>
+              <small class="error" ng-show="signup_form.email.$error.email">
+                Your email is not a valid email.Please input a valid email
+              </small>
+            </div>
+          </div>
+        </div>
+        <!-- username -->
+        <div class="row">
+          <div class="large-12 columns">
+            <label name="username">Your Username</label>
+            <input type="text" name="username" placeholder="Username" ng-model="signup.username" ng-minlength="3"
+              ng-maxlength="20" required />
+            <div class="error" ng-show="signup_form.username.$dirty && signup_form.username.$invalid">
+              <small class="error" ng-show="signup_form.username.$error.required">
+                Your username is required
+              </small>
+              <small class="error" ng-show="signup_form.username.$error.minlength">
+                Your username is required to be at least 3 characters
+              </small>
+              <small class="error" ng-show="signup_form.username.$error.maxlength">
+                Your username cannot be longer than 20 characters
+              </small>
+              <small class="error" ng-show="signup_form.username.$error.unique">
+                Your username is taken,please try another
+              </small>
+            </div>
+          </div>
+        </div>
+        <button ng-disabled="signup_form.$invalid" type="submit" class="button radius">Submit</button>
+      </fieldset>
+    </form>
+  </div>
+  <script>
+    var app = angular.module('myApp', {}, function () { console.log('started'); });
+    app.controller('signupController', function ($scope) {
+      $scope.submitted = false;
+      $scope.sigupForm = function () {
+        if ($scope.sigup_Form.$valid) {
+          // 正常提交
+        } else {
+          $scope.sigup_Form.submitted = true;
+        }
+      }
+    })
+    app.directive('ngFocus', [function () {
+      var FOCUS_CLASS = 'ng-focused';
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ctrl) {
+          ctrl.$focused = false;
+          element.bind('focus', function (evt) {
+            element.addClass(FOCUS_CLASS);
+            scope.$apply(function () {
+              ctrl.$focused = true;
+            });
+          }).bind('blur', function (evt) {
+            element.removeClass(FOCUS_CLASS);
+            scope.$apply(function () {
+              ctrl.$focused = false;
+            });
+          })
+        }
+      }
+    }])
+    app.directive('ensureUnique', function ($http) {
+      return {
+        require: 'ngModel',
+        link: function (scope, ele, attr, c) {
+          $scope.$watch(attrs, ngModel, function (n) {
+            if (!n) return;
+            $http({
+              method: 'POST',
+              url: '/api/check/' + attrs.ensureUnique,
+              data: {
+                field: attrs.ensureUnique,
+                value: scope.ngModel
+              }
+            }).success(function (data) {
+              c.$setValidity('unique', data.isUnique);
+            }).error(function (data) {
+              c.$setValidity('unique', false)
+            })
+          });
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
