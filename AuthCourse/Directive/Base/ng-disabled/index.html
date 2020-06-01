@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <!-- someProperty未定义，值为fasle -->
+    <!-- 当输入文本时，someProperty布尔属性为true -->
+    <input type="text" ng-model="someProperty" placeholder="TypetoEnable">
+    <button ng-model="button" ng-disabled="!someProperty">A Button</button>
+  </div>
+  <script>
+    var app = angular.module('myApp', {}, function () { console.log('started'); });
+  </script>
+</body>
+
+</html>
+<!-- 
+根据HTML标准的定义，布尔属性代表一个true或false值。当这个属性出现时，这个属性的值就是true（无论实际定义的值是什么）。如果未出现，这个属性的值就是false。
+上面例子中，按钮会一直禁用，直到用户在文本字段中输入内容
+ -->
