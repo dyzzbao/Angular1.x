@@ -6,3 +6,4 @@ formvalidate 5 种表单变量 P51
 routeProvider参数属性 P120
 $location 服务（用以解析地址栏中的 URL） P123
 路由事件 P126
+\$injector API P131
