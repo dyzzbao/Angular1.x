@@ -11,7 +11,7 @@
 
 <body>
   <div ng-app="myApp">
-    <div my-directive my-url="http://google.com" my-link-text="Click me to go to Google">
+    <div my-directive some-attr="{{ myUrl }}" my-link-text="Click me to go to">
     </div>
   </div>
   <script>
@@ -24,7 +24,11 @@
             myUrl: '@', //绑定策略
             myLinkText: '@' //绑定策略
           },
-          template: '<a href="{{myUrl}}">{{myLinkText}}</a>'
+          template:
+            `<div>
+              <a href="https://{{myUrl}}">{{myLinkText}}</a>
+              <input type="text" ng-model="myUrl" />
+            </div>`
         }
       })
   </script>
