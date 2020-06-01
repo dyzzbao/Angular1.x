@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp" ng-init="one='one'">
+    <div ng-init="two='two'">
+      2:{{two}}
+      <div ng-init="three='three'" ng-controller="myController">
+        3:{{three}}
+        <div ng-init="four='four'">
+          4:{{four}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('myController', function ($scope) { })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
