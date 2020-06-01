@@ -7,3 +7,4 @@ routeProvider参数属性 P120
 $location 服务（用以解析地址栏中的 URL） P123
 路由事件 P126
 \$injector API P131
+注册服务的几种方式 P138

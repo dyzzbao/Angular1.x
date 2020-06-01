@@ -12,10 +12,20 @@
 
 <body>
   <div ng-app="myApp">
-
+    <div ng-controller="ServiceController">
+      <label for="username">
+        Type in a Github username
+      </label>
+      <input type="text" ng-model="username" placeholder="Enter a GitHub username">
+      <ul>
+        <li ng-repeat="event in events">
+          {{event.actor.login}} {{event.repo.name}}
+        </li>
+      </ul>
+    </div>
   </div>
   <script>
-    angular.module('myApp', [], function () { console.log('started') })
+    angular.module('myApp.services', [], function () { console.log('started') })
       .factory('githubService', function ($http) {
         var githubUrl = 'https://api.github.com'
         var runserRequest = function (username, path) {
@@ -30,8 +40,22 @@
           }
         }
       });
+    //  注意username属性的变化,如果有变化就运行该函数
+    angular.module('myApp', ['myApp.services'])
+      .controller('ServiceController', function ($scope, githubService) {
+        $scope.$watch('username', function (newUsername) {
+          //  从使用JSONP调用Github API的$http服务中返回promise
+          githubService.events(newUsername)
+            .success(function (data, status, headers) {
+              // success函数在数据中封装响应
+              // 因此我们需要调用data.data来获取原始数据
+              $scope.events = data.data
+            })
+        })
+      });
     // var app = angular.module('myApp',{}, function(){console.log('started');});
   </script>
 </body>
 
 </html>
+<!-- 没效果 -->
