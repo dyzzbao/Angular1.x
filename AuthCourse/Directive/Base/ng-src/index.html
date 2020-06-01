@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="myController">
+      <h1>WrongWay</h1>
+      <img src="{{imgSrc}}">
+      <h1>RightWay</h1>
+      <img ng-src="{{imgSrc}}">
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('myController', function ($rootScope, $timeout) {
+        $timeout(function () {
+          $rootScope.imgSrc = 'https://www.baidu.com/img/dong_ff40776fbaec10db0dd452d55c7fe6d7.gif'
+        }, 2000)
+      })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- 
+  浏览在线示例时，通过Chrome开发者工具的网络面板观察资源加载状况，注意，其中一个
+请求是红色的，说明发生了错误。这个错误是由于Wrong Way中我们用src代替了ng-src导致的。
+ -->
