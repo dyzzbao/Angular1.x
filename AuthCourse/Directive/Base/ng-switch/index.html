@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <input type="text" ng-model="person.name">
+    <div ng-switch on="person.name">
+      <p ng-switch-default>And the winner is</p>
+      <h1 ng-switch-when="Ari">{{person.name}}</h1>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- 
+  这个指令和ng-switch-when及on="propertyName"一起使用，可以在propertyName发生变化时渲染不同指令到视图中。
+  在switch被调用之前我们用ng-switch-default来输出默认值。
+ -->
