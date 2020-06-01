@@ -20,6 +20,10 @@
         return {
           restrict: 'A',
           replace: true,
+          scope: {
+            myUrl: '@', //绑定策略
+            myLinkText: '@' //绑定策略
+          },
           template: '<a href="{{myUrl}}">{{myLinkText}}</a>'
         }
       })
@@ -27,4 +31,3 @@
 </body>
 
 </html>
-<!-- 页面不渲染 -->
