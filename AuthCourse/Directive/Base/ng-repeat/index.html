@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <style>
+    .odd {
+      background-color: blue;
+    }
+
+    .even {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <ul ng-controller="myController">
+      <li ng-repeat="person in people" ng-class="{even: !$even,odd: !$odd}">
+        {{person.name}} lives in {{person.city}}
+      </li>
+    </ul>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('myController', function ($scope) {
+        $scope.people = [
+          { name: 'Ari', city: 'San Francisco' },
+          { name: 'Erik', city: 'Seattle' }
+        ]
+      })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- JavaScript中数组的索引从0开始，因此我们用!$even和!$odd来将$even和$odd的布尔值反转。 -->
