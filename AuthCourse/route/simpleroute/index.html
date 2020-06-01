@@ -15,7 +15,7 @@
 
   </div>
   <script>
-    angular.module('myApp', [], function () { console.log('started') })
+    angular.module('myApp', ['ngRoute'], function () { console.log('started') })
       .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
           .when('/', {
