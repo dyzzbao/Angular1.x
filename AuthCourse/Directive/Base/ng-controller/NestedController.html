@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="parentController">
+      {{someBareValue}}
+      <button ng-click="parentAction()">communicate to child</button>
+      <div ng-controller="childController">
+        {{someBareValue}}
+        <button ng-click="childAction()">communicate to parent</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('parentController', function ($scope) {
+        $scope.someBareValue = "hello test"
+        $scope.parentAction = function () {
+          $scope.someBareValue = 'hello,from parent'
+        }
+      })
+      .controller('childController', function ($scope) {
+        $scope.childAction = function () {
+          $scope.someBareValue = 'hello,from child'
+        }
+      })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- 
+  使用子作用域意味着其上的数据模型和操作在应用的其他地方是无法访问的，只能被这个作用域内的指令及其子作用域访问。
+  由于原型继承的关系，修改父级对象中的someBareValue会同时修改子对象中的值，但反之则不行。
+  子控制器是复制而非引用someBareValue,JavaScript对象要么是值复制要么是引用复制。字符串、数字和布尔型变量是值复制。数组、对象和函数则是引用复制。
+ -->
