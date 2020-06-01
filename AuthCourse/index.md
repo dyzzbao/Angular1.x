@@ -5,3 +5,4 @@ formvalidate 5 种表单变量 P51
 控制器特殊服务 $scope\$element\$attrs\$transclude P104
 routeProvider参数属性 P120
 $location 服务（用以解析地址栏中的 URL） P123
+路由事件 P126
