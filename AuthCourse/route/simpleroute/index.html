@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/angular-route@1.2.28/angular-route.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+          .when('/', {
+            templateUrl: 'views/home.html',
+            controller: 'HomeController',
+            resolve: {
+              // 如果设置了resolve属性，AngularJS会将列表中的元素都注入到控制器中。如果这些依赖是promise对象，它们在控制器加载以及$routeChangeSuccess被触发之前，会被resolve并设置成一个值。
+              // resolve会发送一个$http请求，并将data的值替换为返回结果的值。列表中的键data会被注入到控制器中，所以在控制器中可以使用它。
+              'data': ['$http', function ($http) {
+                return $http.get('/api').then(
+                  function success(resp) { return response.date },
+                  function error(reason) { return false }
+                )
+              }]
+            }
+          })
+          .when('/login', {
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+          })
+          .when('/dashboard', {
+            templateUrl: 'views/dashboard.html',
+            controller: 'DashboardController',
+            resolve: {
+              user: function (SessionService) {
+                return SessionService.getCurrentUser();
+              }
+            }
+          })
+          .otherwise({
+            redirectTo: '/'
+          })
+      }])
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- 
+  when(path, route)
+  1、第一个参数是路由路径，这个路径会与$location.path进行匹配，$location.path也就是当前URL的路径。如果路径后面还有其他内容，或使用了双斜线也可以正常匹配。我们可以在URL中存储参数，参数需要以冒号开头（例如:name），后面会讨论如何用$routeParams读取这些参数。
+  2、第二个参数是配置对象，决定了当第一个参数中的路由能够匹配时具体做些什么。配置对象中可以进行设置的属性包括controller、template、templateURL、resolve、redirectTo、reloadOnSearch。
+ -->
