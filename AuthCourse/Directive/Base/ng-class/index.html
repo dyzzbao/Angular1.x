@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <style>
+    .red {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="lotteryController">
+      <div ng-class="{red: x>5}" ng-if="x>5">You won!
+      </div>
+      <button ng-click="generateNumber()">
+        Draw Number
+      </button>
+      <p>Number is:{{x}}</p>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('lotteryController', function ($scope) {
+        $scope.x = 0
+        $scope.generateNumber = function () {
+          $scope.x = Math.floor((Math.random() * 10) + 1)
+        }
+      })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- 
+  使用ng-class 动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。重复的类不会添加。当表达式发生变化，先前添加的类会被移除，新类会被添加。
+ -->
