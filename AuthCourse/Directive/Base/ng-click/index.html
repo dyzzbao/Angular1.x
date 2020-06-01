@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="CounterController">
+      <button ng-click="count=count+1" ng-init="count=0">Inc</button>
+      count:{{count}}
+      <button ng-click="dec()">Dec</button>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .controller('CounterController', function ($scope) {
+        $scope.dec = function () {
+          $scope.count -= 1
+        }
+      })
+    // var app = angular.module('myApp',{}, function(){console.log('started');});
+  </script>
+</body>
+
+</html>
+<!-- ng-click不支持count+=1这样的写法 -->
