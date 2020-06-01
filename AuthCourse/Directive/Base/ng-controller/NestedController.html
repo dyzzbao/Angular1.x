@@ -12,10 +12,10 @@
 <body>
   <div ng-app="myApp">
     <div ng-controller="parentController">
-      {{someBareValue}}
+      {{someModel.someBareValue}}
       <button ng-click="parentAction()">communicate to child</button>
       <div ng-controller="childController">
-        {{someBareValue}}
+        {{someModel.someBareValue}}
         <button ng-click="childAction()">communicate to parent</button>
       </div>
     </div>
@@ -23,14 +23,16 @@
   <script>
     angular.module('myApp', [], function () { console.log('started') })
       .controller('parentController', function ($scope) {
-        $scope.someBareValue = "hello test"
+        $scope.someModel = {
+          someBareValue: "hello test"
+        }
         $scope.parentAction = function () {
-          $scope.someBareValue = 'hello,from parent'
+          $scope.someModel.someBareValue = 'hello,from parent'
         }
       })
       .controller('childController', function ($scope) {
         $scope.childAction = function () {
-          $scope.someBareValue = 'hello,from child'
+          $scope.someModel.someBareValue = 'hello,from child'
         }
       })
     // var app = angular.module('myApp',{}, function(){console.log('started');});
@@ -43,3 +45,5 @@
   由于原型继承的关系，修改父级对象中的someBareValue会同时修改子对象中的值，但反之则不行。
   子控制器是复制而非引用someBareValue,JavaScript对象要么是值复制要么是引用复制。字符串、数字和布尔型变量是值复制。数组、对象和函数则是引用复制。
  -->
+<!-- 如果将模型对象的某个属性设置为字符串，它会通过引用进行共享，因此在子$scope中修改
+属性也会修改父$scope中的这个属性。 -->
