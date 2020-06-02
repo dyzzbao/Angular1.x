@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/angular-route@1.2.28/angular-route.min.js"></script>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-repeat="value in ['账号','密码','确认密码']">
+      <input ng-placeholder="value">
+    </div>
+    <hr>
+    <div ng-repeat="value in ['账号','密码','确认密码']">
+      <input get-element="value">
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', [], function () { console.log('started') })
+      .directive('ngPlaceholder', function () {
+        return function ($scope, $element, $attributes) {
+          var value = $attributes['ngPlaceholder']
+          var valueStr = '$scope.' + value;
+          $element[0].placeholder = eval(valueStr)
+        }
+      })
+      .directive('getElement', [function () {
+        return function ($scope, $element, $attributes) {
+          // $element[0].placeholder = $scope[$attributes['getElement']]
+          console.log($element)
+          console.log($scope[$attributes['getElement']])
+          $scope[$attributes['getElement']] = $element[0].placeholder
+        }
+      }])
+  </script>
+</body>
+
+</html>

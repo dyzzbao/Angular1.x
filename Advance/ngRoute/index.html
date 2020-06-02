@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/angular-route@1.2.28/angular-route.min.js"></script>
+  <style>
+    .top {
+      display: flex
+    }
+
+    .top a {
+      flex: 1;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="main">
+      <div class="top">
+        <a href="#!/home">Home</a>
+        <a href="#!/about">About</a>
+        <a href="#!/me">Me</a>
+      </div>
+      <!-- 显示template的容器 -->
+      <ng-view></ng-view>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', ['ngRoute'], function () { console.log('started') })
+      .controller('main', function ($scope) { })
+      .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+          .when('/!/home', {
+            template: '<div>home</div>'
+          })
+          .when('/!/about', {
+            template: '<div>about</div>'
+          })
+          .when('/!/me', {
+            template: '<div>me</div>'
+          })
+          .otherwise('/!/home')
+      }])
+
+  </script>
+</body>
+
+</html>
