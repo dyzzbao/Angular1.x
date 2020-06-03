@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.2.28/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/angular-route@1.2.28/angular-route.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/angular-ui-router/1.0.26/angular-ui-router.js"></script>
+  <style>
+    .top {
+      display: flex;
+      text-align: center;
+    }
+
+    .top div {
+      flex: 1;
+    }
+
+    .active {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-app="myApp">
+    <div ng-controller="main">
+      <div class="top">
+        <div ui-sref="home" ui-sref-active="active">Home</div>
+        <div ui-sref="about" ui-sref-active="active">About</div>
+        <div ui-sref="me" ui-sref-active="active">Me</div>
+        <!--ui-sref-active= 设置选中样式的类名  -->
+      </div>
+      <ui-view></ui-view>
+    </div>
+  </div>
+  <script>
+    angular.module('myApp', ['ui.router'], function () { console.log('started') })
+      .controller('main', ['$scope', function ($scope) {
+      }])
+      .config(['$stateProvider', '$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
+          $urlRouterProvider.otherwise('about'); // 1级路由 默认页面
+          $urlRouterProvider.when('/home', '/home/page2');//2级路由 默认页面
+          $stateProvider.state('home', { //state 类似 ngRoute 的when方法 不过第一个参数 是路由名称 而非路由路径
+            url: '/home',
+            template:
+              `
+              <div class="margin-top:10px">
+                <span ui-sref="home.page1" ui-sref-active="active">子页面1</span>
+                <span ui-sref="home.page2" ui-sref-active="active">子页面2</span>
+                <p>home</p>
+                <ui-view></ui-view>
+              </div>
+              `,
+          })
+            .state('about', {
+              url: '/about',
+              template: `<div>about</div>`
+            })
+            .state('me', {
+              url: '/me',
+              template: `<div>me</div>`
+            })
+            .state('home.page1', {
+              url: '/page1',
+              template: `<div>page1</div>`
+            })
+            .state('home.page2', {
+              url: '/page2',
+              template: `<div>page2</div>`
+            })
+
+
+
+        }])
+  </script>
+</body>
+
+</html>
